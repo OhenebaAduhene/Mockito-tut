@@ -36,7 +36,6 @@ public class PortfolioTester {
         when(stockService.getPrice(appleStock)).thenReturn(1000.00);
 
         double marketValue = portfolio.getMarketValue();
-//        return marketValue == 100500.0;
 
         assertEquals(100500.0, marketValue);
     }
