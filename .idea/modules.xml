@@ -6,7 +6,9 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/Mockito-tut.iml" filepath="$PROJECT_DIR$/.idea/Mockito-tut.iml" />
       <module fileurl="file://$PROJECT_DIR$/Stream/Stream.iml" filepath="$PROJECT_DIR$/Stream/Stream.iml" />
       <module fileurl="file://$PROJECT_DIR$/calculator/calculator.iml" filepath="$PROJECT_DIR$/calculator/calculator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/calculator/demo.iml" filepath="$PROJECT_DIR$/calculator/demo.iml" />
       <module fileurl="file://$PROJECT_DIR$/mickitobasis/mickitobasis.iml" filepath="$PROJECT_DIR$/mickitobasis/mickitobasis.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spring-security-tut/spring-security-tut.iml" filepath="$PROJECT_DIR$/spring-security-tut/spring-security-tut.iml" />
     </modules>
   </component>
 </project>
