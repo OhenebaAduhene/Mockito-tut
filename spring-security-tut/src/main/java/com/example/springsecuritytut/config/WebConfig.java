@@ -44,7 +44,9 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest()
                 .authenticated()
                 .and()
-                .httpBasic();
+                .formLogin()
+                .loginPage("/login").permitAll();
+//                .httpBasic();
     }
 
     @Override
