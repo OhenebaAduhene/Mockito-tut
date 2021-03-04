@@ -12,4 +12,9 @@ public class LoginController {
     public String loginPage(){
         return "login";
     }
+
+    @GetMapping("index")
+    public String getIndexPage(){
+        return "index";
+    }
 }

@@ -13,6 +13,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import java.util.concurrent.TimeUnit;
 
 import static com.example.springsecuritytut.model.ApplicationUserPermission.COURSE_WRITE;
 import static com.example.springsecuritytut.model.ApplicationUserRole.*;
@@ -36,7 +39,7 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-//                .antMatchers("/","/stu").permitAll()
+                .antMatchers("/","index").permitAll()
 //                .antMatchers(HttpMethod.GET,"/stu").hasAnyRole(STUDENT.name(),ADMIN.name(),ADMINTRAINEE.name())
 //                .antMatchers(HttpMethod.POST, "/mgn/**").hasAuthority(COURSE_WRITE.getPermission())
 //                .antMatchers(HttpMethod.DELETE, "/mgn/**").hasAuthority(COURSE_WRITE.getPermission())
@@ -45,7 +48,20 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
                 .authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/login").permitAll();
+                    .loginPage("/login").permitAll()
+                    .defaultSuccessUrl("/index", true)
+                    .and()
+                .rememberMe()//Default for two weeks so i have customize the expire date
+                    .tokenValiditySeconds((int)TimeUnit.DAYS.toSeconds(21))
+                    .key("somethingverysecured")
+                .and()
+                .logout()
+                    .logoutUrl("/logout")
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
+                    .clearAuthentication(true)
+                    .invalidateHttpSession(true)
+                    .deleteCookies("JSESSIONID","remember-me")
+                    .logoutSuccessUrl("/login");
 //                .httpBasic();
     }
 
