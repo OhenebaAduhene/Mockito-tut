@@ -1,5 +1,6 @@
 package com.example.springsecuritytut.config;
 
+import com.example.springsecuritytut.jwt.JWTAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,6 +9,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -38,6 +40,9 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .addFilter(new JWTAuthentication(authenticationManager()))
                 .authorizeRequests()
                 .antMatchers("/","index").permitAll()
 //                .antMatchers(HttpMethod.GET,"/stu").hasAnyRole(STUDENT.name(),ADMIN.name(),ADMINTRAINEE.name())
@@ -45,23 +50,23 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
 //                .antMatchers(HttpMethod.DELETE, "/mgn/**").hasAuthority(COURSE_WRITE.getPermission())
 //                .antMatchers(HttpMethod.PUT, "/mgn/**").hasAuthority(COURSE_WRITE.getPermission())
                 .anyRequest()
-                .authenticated()
-                .and()
-                .formLogin()
-                    .loginPage("/login").permitAll()
-                    .defaultSuccessUrl("/index", true)
-                    .and()
-                .rememberMe()//Default for two weeks so i have customize the expire date
-                    .tokenValiditySeconds((int)TimeUnit.DAYS.toSeconds(21))
-                    .key("somethingverysecured")
-                .and()
-                .logout()
-                    .logoutUrl("/logout")
-                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
-                    .clearAuthentication(true)
-                    .invalidateHttpSession(true)
-                    .deleteCookies("JSESSIONID","remember-me")
-                    .logoutSuccessUrl("/login");
+                .authenticated();
+//                .and()
+//                .formLogin()
+//                    .loginPage("/login").permitAll()
+//                    .defaultSuccessUrl("/index", true)
+//                    .and()
+//                .rememberMe()//Default for two weeks so i have customize the expire date
+//                    .tokenValiditySeconds((int)TimeUnit.DAYS.toSeconds(21))
+//                    .key("somethingverysecured")
+//                    .and()
+//                .logout()
+//                    .logoutUrl("/logout")
+//                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
+//                    .clearAuthentication(true)
+//                    .invalidateHttpSession(true)
+//                    .deleteCookies("JSESSIONID","remember-me")
+//                    .logoutSuccessUrl("/login");
 //                .httpBasic();
     }
 

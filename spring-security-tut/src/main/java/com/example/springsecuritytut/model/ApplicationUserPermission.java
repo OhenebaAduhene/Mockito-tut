@@ -12,4 +12,6 @@ public enum ApplicationUserPermission {
     COURSE_WRITE("course:write");
 
     private final String permission;
+
+
 }
